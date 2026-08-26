@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#061017" />
+  <title>Operation First Contact: Gate 1</title>
+  <meta name="description" content="Realtime team-based Gate 1 linguistics mission for Operation First Contact." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="fxFlash" class="fx-flash" aria-hidden="true"></div>
+  <div id="missionOverlay" class="mission-overlay hidden" aria-live="polite">
+    <div class="overlay-grid"></div>
+    <div class="overlay-content">
+      <div class="overlay-kicker">FBI LINGUISTICS DIVISION</div>
+      <div id="overlayMain" class="overlay-main">SECURE CHANNEL ESTABLISHED</div>
+      <div id="overlaySub" class="overlay-sub">LINGUISTIC ANALYSIS AUTHORIZED</div>
+    </div>
+  </div>
+
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand-lockup">
+        <div class="seal-mark" aria-hidden="true">FC</div>
+        <div class="brand-copy">
+          <div class="brand-kicker">FBI LINGUISTICS DIVISION</div>
+          <div class="brand-title">OPERATION FIRST CONTACT // GATE 1</div>
+        </div>
+      </div>
+      <div class="classified-stamp">CLASSIFIED // TRAINING USE</div>
+      <div class="top-actions">
+        <button id="audioToggleTop" class="status-button" type="button" title="Enable or disable mission audio">AUDIO: OFF</button>
+        <div class="connection-status"><span id="connectionDot" class="connection-dot"></span><span id="connectionText">BACKEND IDLE</span></div>
+      </div>
+    </header>
+
+    <main>
+      <!-- LANDING -->
+      <section id="landingScreen" class="screen active">
+        <div class="landing-layout">
+          <article class="panel hero-panel cinematic-panel">
+            <div class="scanline"></div>
+            <div class="hero-copy">
+              <div class="eyebrow">ALIEN CONTACT PROTOCOL // LANGUAGE ANALYSIS</div>
+              <h1>FIRST<br>CONTACT</h1>
+              <div class="hero-rule"></div>
+              <p>Incoming extraterrestrial communication has been detected. Linguistics teams are authorized to analyze word function, diagnose breakdowns, and determine Gate 1 readiness.</p>
+              <div class="mission-tags">
+                <span>15 TRANSMISSIONS</span>
+                <span>2 TO 6 TEAMS</span>
+                <span>GATE 1: WORD FUNCTION</span>
+              </div>
+            </div>
+            <div class="agent-accent" aria-hidden="true">
+              <div class="agent-eagle">🦅</div>
+              <div><strong>FIELD AGENT</strong><span>LINGUISTICS DETAIL</span></div>
+            </div>
+          </article>
+
+          <aside class="entry-stack">
+            <section class="panel entry-card">
+              <div class="eyebrow">COMMAND ACCESS</div>
+              <h2>Host Mission</h2>
+              <p>Create a secure room, configure up to six field units, and control the transmission sequence.</p>
+              <button id="hostMissionBtn" class="btn btn-primary btn-wide" type="button">ENTER BRIEFING ROOM</button>
+            </section>
+
+            <section class="panel entry-card">
+              <div class="eyebrow">FIELD UNIT ACCESS</div>
+              <h2>Join Mission</h2>
+              <label class="field-label" for="joinCodeInput">Mission Code</label>
+              <input id="joinCodeInput" class="text-input code-input" inputmode="numeric" maxlength="6" placeholder="000000" autocomplete="off" />
+              <button id="joinMissionBtn" class="btn btn-secondary btn-wide" type="button">JOIN SECURE CHANNEL</button>
+            </section>
+
+            <div id="configWarning" class="config-warning hidden">Backend configuration is missing. Add the Supabase project URL and publishable key to <code>config.js</code>.</div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- HOST SETUP -->
+      <section id="hostSetupScreen" class="screen">
+        <div class="setup-layout">
+          <section class="panel briefing-panel">
+            <div class="eyebrow">PRE-MISSION BRIEFING</div>
+            <h1>Configure Field Units</h1>
+            <p class="muted">Select the number of teams and assign unit names. The game uses the fixed 15-question Gate 1 progression.</p>
+
+            <div class="setup-controls-row">
+              <div class="field-group compact-field">
+                <label for="teamCountSelect">Active Teams</label>
+                <select id="teamCountSelect" class="select-input">
+                  <option value="2">2 Teams</option>
+                  <option value="3">3 Teams</option>
+                  <option value="4" selected>4 Teams</option>
+                  <option value="5">5 Teams</option>
+                  <option value="6">6 Teams</option>
+                </select>
+              </div>
+              <div class="locked-spec">
+                <span>QUESTION TIMER</span><strong>15 SEC</strong>
+              </div>
+              <div class="locked-spec">
+                <span>SCORING</span><strong>100 → 500</strong>
+              </div>
+              <div class="locked-spec">
+                <span>ORDER</span><strong>FIXED</strong>
+              </div>
+            </div>
+
+            <div id="teamNameGrid" class="team-name-grid"></div>
+          </section>
+
+          <aside class="panel mission-settings-panel">
+            <div class="eyebrow">SYSTEM CHECK</div>
+            <h2>Mission Systems</h2>
+            <div class="system-check-list">
+              <div><span>Realtime Room</span><strong>READY</strong></div>
+              <div><span>Question Bank</span><strong>15 LOADED</strong></div>
+              <div><span>Leaderboard</span><strong>EVERY ROUND</strong></div>
+              <div><span>Difficulty Escalation</span><strong>ACTIVE</strong></div>
+            </div>
+            <button id="enableAudioBtn" class="btn btn-secondary btn-wide" type="button">ENABLE MISSION AUDIO</button>
+            <button id="createRoomBtn" class="btn btn-primary btn-wide" type="button">CREATE MISSION ROOM</button>
+            <button id="backLandingBtn" class="btn btn-ghost btn-wide" type="button">RETURN TO ACCESS SCREEN</button>
+          </aside>
+        </div>
+      </section>
+
+      <!-- HOST LOBBY -->
+      <section id="hostLobbyScreen" class="screen">
+        <div class="lobby-layout">
+          <section class="panel code-panel cinematic-panel">
+            <div class="scanline"></div>
+            <div class="eyebrow">SECURE ROOM ACTIVE</div>
+            <h1>FIELD UNITS: REPORT IN</h1>
+            <div id="missionCodeDisplay" class="mission-code">000000</div>
+            <div class="join-instruction">Students open the same game URL and enter this mission code.</div>
+            <div id="joinUrlDisplay" class="join-url"></div>
+            <div class="lobby-action-row">
+              <button id="startMissionBtn" class="btn btn-primary" type="button">INITIATE FIRST CONTACT</button>
+              <button id="cancelMissionBtn" class="btn btn-danger" type="button">CLOSE ROOM</button>
+            </div>
+          </section>
+
+          <aside class="panel team-lobby-panel">
+            <div class="eyebrow">FIELD UNIT STATUS</div>
+            <h2>Connected Teams</h2>
+            <div id="teamLobbyList" class="team-lobby-list"></div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- HOST GAME -->
+      <section id="hostGameScreen" class="screen">
+        <div id="hostLevelShell" class="host-level-shell level-1">
+          <div class="mission-statusbar panel">
+            <div><span>ROOM</span><strong id="roomMiniCode">000000</strong></div>
+            <div><span>TRANSMISSION</span><strong id="hostQIndex">01 / 15</strong></div>
+            <div><span>DIFFICULTY</span><strong id="hostDifficulty">ENTRY LEVEL</strong></div>
+            <div><span>VALUE</span><strong id="hostPoints">100</strong></div>
+            <div class="timer-block"><span>WINDOW</span><strong id="hostTimer">15</strong></div>
+          </div>
+
+          <div class="host-layout">
+            <div class="host-main-stack">
+              <section class="panel transmission-panel">
+                <div class="transmission-header">
+                  <div>
+                    <div id="hostClearance" class="clearance-tag">CLEARANCE LEVEL 1</div>
+                    <div id="hostCategory" class="eyebrow">MISSION BRIEFING</div>
+                  </div>
+                  <div id="hostPhaseLabel" class="phase-label">AWAITING TRANSMISSION</div>
+                </div>
+
+                <div id="hostBriefingState" class="briefing-state">
+                  <div class="incoming-icon" aria-hidden="true">◉</div>
+                  <h2 id="briefingHeading">TRANSMISSION 01 READY</h2>
+                  <p>Load the next transmission when field units are ready.</p>
+                  <button id="openTransmissionBtn" class="btn btn-primary" type="button">OPEN TRANSMISSION</button>
+                </div>
+
+                <div id="hostQuestionState" class="question-state hidden">
+                  <div class="transmission-label">INCOMING TRANSMISSION // ANALYSIS REQUIRED</div>
+                  <h2 id="hostQuestionText" class="question-text"></h2>
+                  <div id="hostAnswers" class="answer-grid"></div>
+                  <div id="hostExplanation" class="explanation-box hidden"></div>
+                </div>
+              </section>
+
+              <section class="panel command-panel">
+                <div class="command-row primary-command-row">
+                  <button id="timerToggleBtn" class="btn btn-secondary" type="button">PAUSE TIMER</button>
+                  <button id="addTimeBtn" class="btn btn-amber" type="button">+10 SEC</button>
+                  <button id="resetTimerBtn" class="btn btn-ghost" type="button">RESET TIMER</button>
+                  <button id="closeResponsesBtn" class="btn btn-ghost" type="button">CLOSE RESPONSES</button>
+                  <button id="revealAnswerBtn" class="btn btn-primary" type="button">REVEAL ANALYSIS</button>
+                  <button id="showLeaderboardBtn" class="btn btn-amber" type="button">FIELD PERFORMANCE REPORT</button>
+                  <button id="continueMissionBtn" class="btn btn-primary" type="button">CONTINUE MISSION</button>
+                </div>
+                <details class="recovery-drawer">
+                  <summary>ADMIN / RECOVERY CONTROLS</summary>
+                  <div class="recovery-grid">
+                    <button id="reopenResponsesBtn" class="btn btn-ghost" type="button">REOPEN RESPONSES</button>
+                    <button id="restartQuestionBtn" class="btn btn-ghost" type="button">RESTART CURRENT</button>
+                    <button id="skipQuestionBtn" class="btn btn-ghost" type="button">SKIP QUESTION</button>
+                    <button id="backQuestionBtn" class="btn btn-ghost" type="button">BACK ONE QUESTION</button>
+                    <button id="endMissionBtn" class="btn btn-danger" type="button">END MISSION EARLY</button>
+                  </div>
+                </details>
+              </section>
+            </div>
+
+            <aside class="panel field-units-panel">
+              <div class="field-unit-header">
+                <div>
+                  <div class="eyebrow">FIELD UNIT REPORTS</div>
+                  <h2>Team Status</h2>
+                </div>
+                <div class="response-counter"><strong id="responseCount">0</strong><span id="responseTotal">/4</span></div>
+              </div>
+              <div id="hostTeamCards" class="host-team-cards"></div>
+            </aside>
+          </div>
+
+          <section id="leaderboardPanel" class="panel leaderboard-panel hidden">
+            <div class="leaderboard-topline">
+              <div>
+                <div class="eyebrow">FIELD PERFORMANCE REPORT</div>
+                <h2 id="leaderboardHeading">CURRENT STANDINGS</h2>
+              </div>
+              <div id="leaderboardRound" class="leaderboard-round">AFTER TRANSMISSION 01</div>
+            </div>
+            <div id="hostLeaderboard" class="leaderboard-list"></div>
+          </section>
+        </div>
+      </section>
+
+      <!-- PLAYER -->
+      <section id="playerScreen" class="screen">
+        <div id="playerLevelShell" class="player-wrap level-1">
+          <section class="panel player-panel cinematic-panel">
+            <div class="scanline"></div>
+            <div class="player-topline">
+              <div>
+                <div class="eyebrow">FIELD UNIT TERMINAL</div>
+                <h1 id="playerHeading">CONNECTING</h1>
+              </div>
+              <div class="player-scorebox"><span>SCORE</span><strong id="playerScore">0</strong></div>
+            </div>
+            <div class="player-roomline">MISSION CODE: <strong id="playerRoomCode">000000</strong></div>
+            <p id="playerSubheading" class="muted">Stand by while the secure channel opens.</p>
+
+            <div id="teamSelectionArea" class="hidden">
+              <div class="transmission-label">SELECT ASSIGNED FIELD UNIT</div>
+              <div id="teamChoiceGrid" class="team-choice-grid"></div>
+              <button id="confirmTeamBtn" class="btn btn-primary btn-wide" type="button" disabled>CONFIRM FIELD UNIT</button>
+            </div>
+
+            <div id="playerWaitingArea" class="player-waiting">
+              <div id="playerWaitBox" class="wait-box">Connecting...</div>
+            </div>
+
+            <div id="playerQuestionArea" class="hidden">
+              <div class="student-transmission-header">
+                <div id="playerClearance" class="clearance-tag">CLEARANCE LEVEL 1</div>
+                <div id="playerQIndex" class="phase-label">TRANSMISSION 01 / 15</div>
+              </div>
+              <div class="transmission-label">INCOMING TRANSMISSION // SUBMIT ANALYSIS</div>
+              <h2 id="playerQuestionText" class="player-question-text"></h2>
+              <div id="playerAnswers" class="player-answer-grid"></div>
+              <button id="submitAnalysisBtn" class="btn btn-primary btn-wide" type="button" disabled>SUBMIT ANALYSIS</button>
+              <div id="playerLockNotice" class="lock-notice hidden"></div>
+              <div id="playerResultBox" class="result-box hidden"></div>
+            </div>
+
+            <div id="playerLeaderboardArea" class="hidden">
+              <div class="eyebrow">FIELD PERFORMANCE REPORT</div>
+              <h2>CURRENT STANDINGS</h2>
+              <div id="playerLeaderboard" class="leaderboard-list compact"></div>
+              <div class="wait-box">Awaiting next transmission...</div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- FINAL -->
+      <section id="finalScreen" class="screen">
+        <div class="final-layout">
+          <section class="panel final-panel cinematic-panel">
+            <div class="scanline"></div>
+            <div class="eyebrow">MISSION COMPLETE</div>
+            <h1>GATE 1 READINESS<br>ANALYSIS COMPLETE</h1>
+            <p>Different kinds of words perform different jobs.</p>
+            <div id="finalWinner" class="winner-callout"></div>
+            <div id="finalStandings" class="leaderboard-list final-standings"></div>
+          </section>
+          <aside class="panel final-controls-panel">
+            <div class="eyebrow">COMMAND CONSOLE</div>
+            <h2>Mission Closed</h2>
+            <p class="muted">Create a fresh room for another class. The same website can host multiple independent rooms at the same time.</p>
+            <button id="restartHostBtn" class="btn btn-primary btn-wide" type="button">RUN NEW MISSION</button>
+            <button id="returnHomeBtn" class="btn btn-ghost btn-wide" type="button">RETURN TO ACCESS SCREEN</button>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>OPERATION FIRST CONTACT // GRADE 8 ELA</span>
+      <span id="footerStatus">SECURE TEAM TRAINING PLATFORM</span>
+    </footer>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="questions.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+</body>
+</html>
