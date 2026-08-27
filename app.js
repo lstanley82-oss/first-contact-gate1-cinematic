@@ -4,7 +4,7 @@
   const QUESTIONS = Array.isArray(window.FC_GATE1_QUESTIONS) ? window.FC_GATE1_QUESTIONS : [];
   const TEAM_DEFAULTS = ['TEAM ALPHA','TEAM BRAVO','TEAM CHARLIE','TEAM DELTA','TEAM ECHO','TEAM FOXTROT'];
   const LETTERS = ['A','B','C','D'];
-  const TIMER_DEFAULT = 15;
+  const TIMER_DEFAULT = 30;
   const HEARTBEAT_MS = 10000;
   const OFFLINE_AFTER_MS = 32000;
 
@@ -49,6 +49,7 @@
   const AudioManager = (() => {
     let ctx = null;
     let ambientNodes = [];
+    let ambientTimer = null;
     let enabled = false;
 
     function setUi() {
@@ -71,55 +72,61 @@
       osc.stop(ctx.currentTime + delay + duration + .03);
     }
 
+    function scheduleAlienSignal() {
+      if (!enabled || !ctx) return;
+      const choices = [286, 342, 417, 533, 701, 862];
+      const base = choices[Math.floor(Math.random()*choices.length)];
+      // Sparse, eerie call-and-response motif rather than a continuous hum.
+      tone(base,1.15,'sine',.018,0);
+      tone(base*1.49,.85,'triangle',.013,.42);
+      if (Math.random()>.45) tone(base*.73,1.35,'sine',.012,.96);
+      ambientTimer = setTimeout(scheduleAlienSignal, 4200 + Math.random()*5200);
+    }
+
     function startAmbient() {
       if (!enabled || !ctx || ambientNodes.length) return;
       const master = ctx.createGain();
-      master.gain.value = .075;
+      master.gain.value = .055;
       master.connect(ctx.destination);
 
-      const low = ctx.createOscillator();
-      low.type = 'sine';
-      low.frequency.value = 72;
-      const lowGain = ctx.createGain();
-      lowGain.gain.value = .20;
-      low.connect(lowGain).connect(master);
-      low.start();
-
-      const high = ctx.createOscillator();
-      high.type = 'triangle';
-      high.frequency.value = 144;
-      const highGain = ctx.createGain();
-      highGain.gain.value = .09;
-      high.connect(highGain).connect(master);
-      high.start();
-
-      const lfo = ctx.createOscillator();
-      lfo.type = 'sine';
-      lfo.frequency.value = .12;
-      const lfoGain = ctx.createGain();
-      lfoGain.gain.value = .012;
-      lfo.connect(lfoGain).connect(master.gain);
-      lfo.start();
-
-      const bufferSize = Math.max(1, Math.floor(ctx.sampleRate * 2));
+      // A quiet, airy radio-static bed that moves slowly through the spectrum.
+      const bufferSize = Math.max(1, Math.floor(ctx.sampleRate * 3));
       const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
       const data = buffer.getChannelData(0);
-      for (let i=0;i<bufferSize;i++) data[i] = (Math.random()*2-1) * .24;
+      let last = 0;
+      for (let i=0;i<bufferSize;i++) {
+        const white = Math.random()*2-1;
+        last = last*.985 + white*.015;
+        data[i] = last*.42;
+      }
       const noise = ctx.createBufferSource();
       noise.buffer = buffer;
       noise.loop = true;
-      const filter = ctx.createBiquadFilter();
-      filter.type = 'lowpass';
-      filter.frequency.value = 520;
+      const band = ctx.createBiquadFilter();
+      band.type = 'bandpass';
+      band.frequency.value = 1150;
+      band.Q.value = .7;
       const noiseGain = ctx.createGain();
-      noiseGain.gain.value = .045;
-      noise.connect(filter).connect(noiseGain).connect(master);
+      noiseGain.gain.value = .085;
+      noise.connect(band).connect(noiseGain).connect(master);
       noise.start();
 
-      ambientNodes = [master,low,high,lfo,noise];
+      // Slow spectral drift gives the room an alien-radio feel without a bass drone.
+      const lfo = ctx.createOscillator();
+      lfo.type = 'sine';
+      lfo.frequency.value = .055;
+      const lfoGain = ctx.createGain();
+      lfoGain.gain.value = 520;
+      lfo.connect(lfoGain).connect(band.frequency);
+      lfo.start();
+
+      ambientNodes = [master,noise,lfo];
+      ambientTimer = setTimeout(scheduleAlienSignal, 1400);
     }
 
     function stopAmbient() {
+      if (ambientTimer) clearTimeout(ambientTimer);
+      ambientTimer = null;
       ambientNodes.forEach(node => {
         try { if (node.stop) node.stop(); } catch (_) {}
         try { node.disconnect(); } catch (_) {}
@@ -145,11 +152,11 @@
     }
 
     function toggle() { return enabled ? disable() : enable(); }
-    function incoming() { tone(380,.08,'sine',.035,0); tone(620,.11,'triangle',.045,.075); tone(840,.09,'sine',.03,.16); }
-    function missionStart() { tone(220,.16,'triangle',.055,0); tone(330,.16,'triangle',.055,.14); tone(495,.26,'sine',.06,.29); }
+    function incoming() { tone(910,.09,'sine',.032,0); tone(615,.18,'triangle',.04,.10); tone(370,.34,'sine',.028,.24); }
+    function missionStart() { tone(260,.18,'triangle',.045,0); tone(390,.22,'triangle',.05,.16); tone(585,.38,'sine',.055,.34); tone(780,.55,'sine',.025,.55); }
     function tick() { tone(900,.045,'square',.026,0); }
-    function correct() { tone(560,.12,'sine',.045,0); tone(840,.18,'sine',.05,.09); }
-    function warning() { tone(230,.11,'sawtooth',.028,0); tone(180,.14,'sawtooth',.022,.10); }
+    function correct() { tone(523,.12,'sine',.042,0); tone(659,.14,'sine',.046,.08); tone(988,.24,'triangle',.042,.17); }
+    function warning() { tone(310,.13,'sawtooth',.025,0); tone(232,.18,'triangle',.025,.12); tone(155,.26,'sine',.018,.25); }
     function leaderboard() { tone(440,.07,'triangle',.03,0); tone(590,.08,'triangle',.032,.065); tone(740,.11,'sine',.035,.13); }
     function victory() { tone(330,.12,'triangle',.045,0); tone(440,.12,'triangle',.05,.11); tone(660,.14,'sine',.055,.22); tone(880,.28,'sine',.06,.35); }
 

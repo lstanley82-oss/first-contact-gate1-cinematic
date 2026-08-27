@@ -25,12 +25,12 @@ window.FC_GATE1_QUESTIONS = [
     category: 'GATE 1 // WORD FUNCTION',
     question: 'What is the central idea of Gate 1?',
     answers: [
-      'Every sentence needs several descriptive words',
       'Different kinds of words perform different jobs',
-      'Vocabulary is more important than sentence structure',
-      'Every English word should be taught separately'
+      'Every sentence needs several descriptive words',
+      'Every English word should be taught separately',
+      'Vocabulary is more important than sentence structure'
     ],
-    correct: 1,
+    correct: 0,
     explanation: 'Gate 1 is built around a simple principle: words are not just labels. Different kinds of words perform different jobs.'
   },
   {
@@ -42,12 +42,12 @@ window.FC_GATE1_QUESTIONS = [
     category: 'GRAMMATICAL ANALYSIS',
     question: 'In the phrase “the cautious human,” what part of speech is cautious functioning as?',
     answers: [
-      'Adverb',
-      'Adjective',
       'Pronoun',
-      'Determiner'
+      'Determiner',
+      'Adverb',
+      'Adjective'
     ],
-    correct: 1,
+    correct: 3,
     explanation: 'Cautious is functioning as an adjective because it gives more information about the noun human.'
   },
   {
@@ -77,11 +77,11 @@ window.FC_GATE1_QUESTIONS = [
     question: 'Which response gives the STRONGEST evidence that the alien understands why ship is a noun?',
     answers: [
       '“Ship is a noun because ship is an object.”',
-      '“Ship is a noun because a noun can be a thing.”',
       '“Ship is a noun because ship names an object.”',
-      '“Ship, table, and human are nouns.”'
+      '“Ship, table, and human are nouns.”',
+      '“Ship is a noun because a noun can be a thing.”'
     ],
-    correct: 2,
+    correct: 1,
     explanation: 'The strongest response identifies the category and explains the word’s grammatical function: ship names an object.'
   },
   {
@@ -93,12 +93,12 @@ window.FC_GATE1_QUESTIONS = [
     category: 'PREPOSITION FUNCTION',
     question: 'In the sentence “The alien moved toward the ship,” what job does toward perform?',
     answers: [
-      'It describes how the alien moved',
       'It shows a relationship involving direction',
-      'It replaces the noun ship',
-      'It connects two independent ideas'
+      'It describes how the alien moved',
+      'It connects two independent ideas',
+      'It replaces the noun ship'
     ],
-    correct: 1,
+    correct: 0,
     explanation: 'Toward is a preposition. It shows a relationship involving direction between the movement and the ship.'
   },
   {
@@ -111,11 +111,11 @@ window.FC_GATE1_QUESTIONS = [
     question: 'In the sentence “The ship is damaged,” what part of speech is is functioning as?',
     answers: [
       'Adjective, because it describes the ship',
-      'Verb, because it shows a state',
+      'Determiner, because it identifies the ship',
       'Conjunction, because it connects ship and damaged',
-      'Determiner, because it identifies the ship'
+      'Verb, because it shows a state'
     ],
-    correct: 1,
+    correct: 3,
     explanation: 'Is is functioning as a verb because verbs can show an action, event, or state. Here, is shows the ship’s state.'
   },
   {
@@ -127,12 +127,12 @@ window.FC_GATE1_QUESTIONS = [
     category: 'COMMUNICATION PROTOCOL',
     question: 'A student decides to teach the alien nouns and pronouns at the same time because pronouns refer to nouns. What is the strongest criticism of that approach?',
     answers: [
+      'Pronouns should always be taught before nouns',
       'Pronouns have nothing to do with nouns',
       'The two categories are related, but the alien should establish one word-function pattern before learning another',
-      'Pronouns should always be taught before nouns',
       'Nouns and pronouns should only be taught once the alien reaches Functional English'
     ],
-    correct: 1,
+    correct: 2,
     explanation: 'The categories are related, but the protocol asks agents to isolate one concept at a time so the alien can establish a clear pattern.'
   },
   {
@@ -144,12 +144,12 @@ window.FC_GATE1_QUESTIONS = [
     category: 'GATE-BASED DIAGNOSIS',
     question: 'The alien correctly identifies the noun and verb in a response, but its sentence also contains errors involving concepts from later Gates. What should the agent do FIRST?',
     answers: [
-      'Correct every error so the alien does not develop bad habits',
       'Focus primarily on whether the alien demonstrated the current Gate',
-      'Move immediately to the later Gate causing the error',
-      'Require the alien to rewrite the entire sentence correctly'
+      'Correct every error so the alien does not develop bad habits',
+      'Require the alien to rewrite the entire sentence correctly',
+      'Move immediately to the later Gate causing the error'
     ],
-    correct: 1,
+    correct: 0,
     explanation: 'Judge the response according to the current Gate. Later-Gate errors should not erase evidence that the current concept is developing.'
   },
   {
@@ -162,11 +162,11 @@ window.FC_GATE1_QUESTIONS = [
     question: 'The alien correctly identifies human, ship, and fear as nouns whenever you show those words, but cannot give you a different noun. What is the best conclusion?',
     answers: [
       'The alien understands nouns because all three classifications were correct',
+      'The alien should move forward because producing new examples is optional',
       'The alien may recognize memorized examples without understanding the larger noun pattern',
-      'The alien understands concrete nouns but not verbs',
-      'The alien should move forward because producing new examples is optional'
+      'The alien understands concrete nouns but not verbs'
     ],
-    correct: 1,
+    correct: 2,
     explanation: 'Recognition is not the same as transfer. Producing a new example is stronger evidence that the alien understands the noun pattern rather than memorizing examples.'
   },
   {
@@ -196,11 +196,11 @@ window.FC_GATE1_QUESTIONS = [
     question: 'Consider the sentence: “They moved cautiously toward the ship.” Which pair of classifications is correct?',
     answers: [
       'They = noun; cautiously = adjective',
+      'They = pronoun; cautiously = adjective',
       'They = pronoun; cautiously = adverb',
-      'They = determiner; cautiously = preposition',
-      'They = pronoun; cautiously = adjective'
+      'They = determiner; cautiously = preposition'
     ],
-    correct: 1,
+    correct: 2,
     explanation: 'They is a pronoun because it stands in for a noun or noun phrase. Cautiously is an adverb because it modifies the verb moved.'
   },
   {
@@ -229,12 +229,12 @@ window.FC_GATE1_QUESTIONS = [
     category: 'MEANING VS. FUNCTION',
     question: 'Consider: “We wait because the ship is damaged.” Which explanation of because is most accurate?',
     answers: [
-      'It is a preposition because it shows the relationship between wait and ship',
       'It is an adverb because it explains why the humans wait',
       'It is a conjunction because it connects parts of the sentence',
+      'It is a preposition because it shows the relationship between wait and ship',
       'It is a determiner because it introduces the reason for waiting'
     ],
-    correct: 2,
+    correct: 1,
     explanation: 'Because introduces a reason, but its grammatical job is conjunction: it connects parts of the sentence.'
   },
   {
@@ -247,11 +247,11 @@ window.FC_GATE1_QUESTIONS = [
     question: 'The alien analyzes “They moved cautiously toward the ship.” It says: “They is pronoun because it refers to people. Moved is verb because it shows an action. Cautiously is adjective because it describes the movement. Toward is preposition because it shows direction. Ship is noun because it names an object.” What is the BEST diagnosis?',
     answers: [
       'The alien understands every word function correctly',
-      'The alien understands most of the functions but has confused an adjective with an adverb',
       'The alien understands nouns and verbs but not pronouns or prepositions',
-      'The alien should fail Gate 1 because the entire analysis must be correct'
+      'The alien should fail Gate 1 because the entire analysis must be correct',
+      'The alien understands most of the functions but has confused an adjective with an adverb'
     ],
-    correct: 1,
+    correct: 3,
     explanation: 'The alien correctly identifies the pronoun, verb, preposition, and noun. The remaining misconception is cautiously: it is an adverb modifying moved, not an adjective.'
   }
 ];
